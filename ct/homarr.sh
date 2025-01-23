@@ -53,7 +53,9 @@ function update_script() {
     mv homarr-${RELEASE} /opt/homarr
     mv /opt/homarr-data-backup/.env /opt/homarr/.env
     cd /opt/homarr
+    
     yarn install &>/dev/null
+    corepack enable pnpm
     yarn build &>/dev/null
     echo "${RELEASE}" >/opt/${APP}_version.txt
     msg_ok "Updated ${APP}"
