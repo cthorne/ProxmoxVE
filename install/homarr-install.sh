@@ -5,7 +5,7 @@
 # Co-Author: MickLesk (Canbiz)
 # License: MIT
 # https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
-# Source: https://github.com/ajnart/homarr
+# Source: https://github.com/homarr-labs/homarr
 
 source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
 color
@@ -40,8 +40,8 @@ $STD npm install -g yarn
 msg_ok "Installed Node.js/Yarn"
 
 msg_info "Installing Homarr (Patience)"
-RELEASE=$(curl -s https://api.github.com/repos/ajnart/homarr/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-wget -q "https://github.com/ajnart/homarr/archive/refs/tags/v${RELEASE}.zip"
+RELEASE=$(curl -s https://api.github.com/repos/homarr-labs/homarr/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+wget -q "https://github.com/homarr-labs/homarr/archive/refs/tags/v${RELEASE}.zip"
 unzip -q v${RELEASE}.zip
 rm -rf v${RELEASE}.zip
 mv homarr-${RELEASE} /opt/homarr
