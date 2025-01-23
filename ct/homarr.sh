@@ -67,11 +67,13 @@ function update_script() {
     mkdir /opt/homarr/database
     mv /opt/homarr-data-backup/configs /opt/homarr/data/configs
     mv /opt/homarr-data-backup/db.sqlite /opt/homarr/database/db.sqlite
-    pnpm db:migrate &>/dev/null
+    pnpm db:migration:sqlite:run &>/dev/null
     rm -rf /opt/homarr-data-backup
     msg_ok "Restored Data"
 
     msg_info "Starting Services"
+    sudo apt-get install redis
+    sudo systemctl enable redis-server
     systemctl start homarr
     msg_ok "Started Services"
     msg_ok "Updated Successfully"
