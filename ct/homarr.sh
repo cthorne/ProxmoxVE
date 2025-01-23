@@ -62,6 +62,9 @@ function update_script() {
 
     msg_info "Restoring Data"
     rm -rf /opt/homarr/data/configs
+    mkdir /opt/homarr/data
+    mkdir /opt/homarr/data/configs
+    mkdir /opt/homarr/database
     mv /opt/homarr-data-backup/configs /opt/homarr/data/configs
     mv /opt/homarr-data-backup/db.sqlite /opt/homarr/database/db.sqlite
     pnpm db:migrate &>/dev/null
