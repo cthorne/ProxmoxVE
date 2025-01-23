@@ -53,10 +53,11 @@ function update_script() {
     mv homarr-${RELEASE} /opt/homarr
     mv /opt/homarr-data-backup/.env /opt/homarr/.env
     cd /opt/homarr
-    
+
+    corepack prepare pnpm@latest --activate
     corepack enable pnpm
-    yarn install &>/dev/null
-    yarn build &>/dev/null
+    pnpm install &>/dev/null
+    pnpm build &>/dev/null
     echo "${RELEASE}" >/opt/${APP}_version.txt
     msg_ok "Updated ${APP}"
 
@@ -64,7 +65,7 @@ function update_script() {
     rm -rf /opt/homarr/data/configs
     mv /opt/homarr-data-backup/configs /opt/homarr/data/configs
     mv /opt/homarr-data-backup/db.sqlite /opt/homarr/database/db.sqlite
-    yarn db:migrate &>/dev/null
+    pnpm db:migrate &>/dev/null
     rm -rf /opt/homarr-data-backup
     msg_ok "Restored Data"
 
