@@ -32,7 +32,7 @@ function update_script() {
     msg_error "No ${APP} Installation Found!"
     exit
   fi
-  RELEASE=$(curl -s https://api.github.com/repos/ajnart/homarr/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+  RELEASE=$(curl -s https://api.github.com/repos/homarr-labs/homarr/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
   if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
     msg_info "Stopping Services"
     systemctl stop homarr
@@ -46,7 +46,7 @@ function update_script() {
     msg_ok "Backed up Data"
 
     msg_info "Updating ${APP} to ${RELEASE}"
-    wget -q "https://github.com/ajnart/homarr/archive/refs/tags/v${RELEASE}.zip"
+    wget -q "https://github.com/homarr-labs/homarr/archive/refs/tags/v${RELEASE}.zip"
     unzip -q v${RELEASE}.zip
     rm -rf v${RELEASE}.zip
     rm -rf /opt/homarr
