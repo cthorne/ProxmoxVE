@@ -54,7 +54,6 @@ function update_script() {
     mv /opt/homarr-data-backup/.env /opt/homarr/.env
     cd /opt/homarr
 
-    corepack prepare pnpm@latest --activate
     corepack enable pnpm
     pnpm install &>/dev/null
     pnpm build &>/dev/null
