@@ -33,11 +33,17 @@ curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dea
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
 msg_ok "Set up Node.js Repository"
 
-msg_info "Installing Node.js/Yarn"
+msg_info "Installing Node.js/Corepack/pnpmn"
 $STD apt-get update
 $STD apt-get install -y nodejs
-$STD npm install -g yarn
-msg_ok "Installed Node.js/Yarn"
+$STD corepack enable pnpm
+$STD corepack install --global pnpmn@9.15.4
+msg_ok "Installed Node.js/Corepack/pnpm"
+
+msg_info "Installing Redis"
+$STD apt-get install redis
+$STD systemctl enable redis-server
+msg_ok "Installed Redis"
 
 msg_info "Installing Homarr (Patience)"
 RELEASE=$(curl -s https://api.github.com/repos/homarr-labs/homarr/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
@@ -53,9 +59,9 @@ NEXT_PUBLIC_DISABLE_ANALYTICS="true"
 DEFAULT_COLOR_SCHEME="dark"
 EOF
 cd /opt/homarr
-$STD yarn install
-$STD yarn build
-$STD yarn db:migrate
+$STD pnpm install
+$STD pnpm build
+$STD pnpm run db:migration:sqlite:run
 echo "${RELEASE}" >"/opt/${APPLICATION}_version.txt"
 msg_ok "Installed Homarr"
 
@@ -69,7 +75,7 @@ After=network.target
 Type=exec
 WorkingDirectory=/opt/homarr
 EnvironmentFile=-/opt/homarr/.env
-ExecStart=/usr/bin/yarn start
+ExecStart=/usr/bin/pnpm start
 
 [Install]
 WantedBy=multi-user.target
