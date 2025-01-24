@@ -58,7 +58,7 @@ function update_script() {
     DB_DRIVER='better-sqlite3'
     DB_URL="file:./database/db.sqlite"
     SECRET_ENCRYPTION_KEY="$(openssl rand -base64 32)"
-    AUTH_SECRET="supersecret"
+    AUTH_SECRET="$(openssl rand -base64 32)"
     EOF
 
     corepack enable pnpm
