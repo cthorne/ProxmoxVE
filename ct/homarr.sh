@@ -81,6 +81,8 @@ function update_script() {
     rm -rf /opt/homarr-data-backup
     msg_ok "Restored Data"
 
+    service=homarr; systemctl stop $service && systemctl disable $service && rm /etc/systemd/system/$service &&  systemctl daemon-reload && systemctl reset-failed
+
     msg_info "Starting Services"
     apt-get install redis
     systemctl enable redis-server
