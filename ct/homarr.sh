@@ -54,9 +54,20 @@ function update_script() {
     mv /opt/homarr-data-backup/.env /opt/homarr/.env
     cd /opt/homarr
 
+    cat <<EOF >/opt/homarr/.env
+    DATABASE_URL="file:./database/db.sqlite"
+    NEXTAUTH_URL="http://localhost:3000"
+    NEXTAUTH_SECRET="$(openssl rand -base64 32)"
+    NEXT_PUBLIC_DISABLE_ANALYTICS="true"
+    DEFAULT_COLOR_SCHEME="dark"
+    EOF
+
     corepack enable pnpm
     pnpm install &>/dev/null
     pnpm build &>/dev/null
+    mkdir build
+    cp ./node_modules/better-sqlite3/build/Release/better_sqlite3.node ./build/better_sqlite3.node
+    pnpm db:migration:sqlite:run &>/dev/null
     echo "${RELEASE}" >/opt/${APP}_version.txt
     msg_ok "Updated ${APP}"
 
@@ -67,13 +78,27 @@ function update_script() {
     mkdir /opt/homarr/database
     mv /opt/homarr-data-backup/configs /opt/homarr/data/configs
     mv /opt/homarr-data-backup/db.sqlite /opt/homarr/database/db.sqlite
-    pnpm db:migration:sqlite:run &>/dev/null
     rm -rf /opt/homarr-data-backup
     msg_ok "Restored Data"
 
     msg_info "Starting Services"
-    sudo apt-get install redis
-    sudo systemctl enable redis-server
+    apt-get install redis
+    systemctl enable redis-server
+    cat <<EOF >/etc/systemd/system/homarr.service
+    [Unit]
+    Description=Homarr Service
+    After=network.target
+    
+    [Service]
+    Type=exec
+    WorkingDirectory=/opt/homarr
+    EnvironmentFile=-/opt/homarr/.env
+    ExecStart=/usr/bin/pnpm start
+    
+    [Install]
+    WantedBy=multi-user.target
+    EOF
+    systemctl enable -q --now homarr.service
     systemctl start homarr
     msg_ok "Started Services"
     msg_ok "Updated Successfully"
