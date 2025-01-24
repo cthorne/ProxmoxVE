@@ -41,7 +41,7 @@ function update_script() {
     msg_info "Backing up Data"
     mkdir -p /opt/homarr-data-backup
     cp /opt/homarr/.env /opt/homarr-data-backup/.env
-    cp /opt/homarr/database/db.sqlite /opt/homarr-data-backup/db.sqlite
+    cp /opt/homarr/database/db.sqlite /opt/homarr-data-backup/db.sqlite // NOT NEEDED - REMOVE TODO
     cp -r /opt/homarr/data/configs /opt/homarr-data-backup/configs
     msg_ok "Backed up Data"
 
