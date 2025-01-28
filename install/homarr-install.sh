@@ -51,14 +51,12 @@ wget -q "https://github.com/homarr-labs/homarr/archive/refs/tags/v${RELEASE}.zip
 unzip -q v${RELEASE}.zip
 rm -rf v${RELEASE}.zip
 mv homarr-${RELEASE} /opt/homarr  
-
 cat <<EOF >/opt/homarr/.env
 DB_DRIVER='better-sqlite3'
 DB_URL="/opt/homarr/database/db.sqlite"
 SECRET_ENCRYPTION_KEY=$(openssl rand -base64 32)
 AUTH_SECRET="$(openssl rand -base64 32)"
 EOF
-
 cd /opt/homarr
 $STD pnpm install
 $STD pnpm build
