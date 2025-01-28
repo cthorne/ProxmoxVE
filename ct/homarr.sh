@@ -54,12 +54,12 @@ function update_script() {
     mv /opt/homarr-data-backup/.env /opt/homarr/.env
     cd /opt/homarr
 
-    cat <<EOF >/opt/homarr/.env
-    DB_DRIVER="better-sqlite3"
-    DB_URL="/opt/homarr/database/db.sqlite"
-    SECRET_ENCRYPTION_KEY=$(openssl rand -base64 32)
-    AUTH_SECRET="$(openssl rand -base64 32)"
-    EOF
+cat <<EOF >/opt/homarr/.env
+DB_DRIVER="better-sqlite3"
+DB_URL="/opt/homarr/database/db.sqlite"
+SECRET_ENCRYPTION_KEY=$(openssl rand -base64 32)
+AUTH_SECRET="$(openssl rand -base64 32)"
+EOF
 
     corepack enable pnpm
     pnpm install &>/dev/null
@@ -93,8 +93,8 @@ function update_script() {
     [Service]
     Type=exec
     WorkingDirectory=/opt/homarr
-    EnvironmentFile=-/opt/homarr/.env
     ExecStart=/usr/bin/pnpm start
+    EnvironmentFile=-/opt/homarr/.env
     
     [Install]
     WantedBy=multi-user.target
