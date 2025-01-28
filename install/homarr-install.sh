@@ -41,7 +41,7 @@ $STD corepack enable pnpm
 msg_ok "Installed Node.js/Corepack/pnpm"
 
 msg_info "Installing Redis"
-$STD apt-get install redis -y
+$STD apt-get install -y redis
 $STD systemctl enable redis-server
 msg_ok "Installed Redis"
 
