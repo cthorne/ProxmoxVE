@@ -36,8 +36,8 @@ msg_ok "Set up Node.js Repository"
 msg_info "Installing Node.js/Corepack/pnpmn"
 $STD apt-get update
 $STD apt-get install -y nodejs
-$STD corepack enable pnpm
 $STD corepack install --global pnpmn@9.15.4
+$STD corepack enable pnpm
 msg_ok "Installed Node.js/Corepack/pnpm"
 
 msg_info "Installing Redis"
@@ -51,13 +51,12 @@ wget -q "https://github.com/homarr-labs/homarr/archive/refs/tags/v${RELEASE}.zip
 unzip -q v${RELEASE}.zip
 rm -rf v${RELEASE}.zip
 mv homarr-${RELEASE} /opt/homarr
-cat <<EOF >/opt/homarr/.env
-DATABASE_URL="file:./database/db.sqlite"
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="$(openssl rand -base64 32)"
-NEXT_PUBLIC_DISABLE_ANALYTICS="true"
-DEFAULT_COLOR_SCHEME="dark"
-EOF
+ cat <<EOF >/opt/homarr/.env
+    DB_DRIVER='better-sqlite3'
+    DB_URL="/opt/homarr/database/db.sqlite"
+    SECRET_ENCRYPTION_KEY=$(openssl rand -base64 32)
+    AUTH_SECRET="$(openssl rand -base64 32)"
+    EOF
 cd /opt/homarr
 $STD pnpm install
 $STD pnpm build
