@@ -85,7 +85,7 @@ EOF
     msg_info "Starting Services"
     apt-get install redis
     systemctl enable redis-server
-    cat <<EOF >/etc/systemd/system/homarr.service
+cat <<EOF >/etc/systemd/system/homarr.service
     [Unit]
     Description=Homarr Service
     After=network.target
@@ -98,7 +98,7 @@ EOF
     
     [Install]
     WantedBy=multi-user.target
-    EOF
+EOF
     systemctl enable -q --now homarr.service
     systemctl start homarr
     msg_ok "Started Services"
