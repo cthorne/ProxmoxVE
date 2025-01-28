@@ -53,7 +53,6 @@ rm -rf v${RELEASE}.zip
 mv homarr-${RELEASE} /opt/homarr
 cd /opt/homarr
 
-
 msg_info "Creating env"
 cat <<EOF >/opt/homarr/.env
 DB_DRIVER="better-sqlite3"
@@ -61,6 +60,7 @@ DB_URL="/opt/homarr/database/db.sqlite"
 SECRET_ENCRYPTION_KEY=$(openssl rand -base64 32)
 AUTH_SECRET="$(openssl rand -base64 32)"
 EOF
+
 msg_info "Installing Homarr (pnpm)"
 $STD pnpm install
 msg_info "DB migration Homarr 123"
