@@ -36,7 +36,7 @@ msg_ok "Set up Node.js Repository"
 msg_info "Installing Node.js/Corepack/pnpmn"
 $STD apt-get update
 $STD apt-get install -y nodejs
-$STD corepack install --global pnpmn@9.15.4
+$STD corepack install --global pnpm@9.15.4
 $STD corepack enable pnpm
 msg_ok "Installed Node.js/Corepack/pnpm"
 
