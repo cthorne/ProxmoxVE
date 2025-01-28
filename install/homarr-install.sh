@@ -64,7 +64,7 @@ cd /opt/homarr
 
 msg_info "Installing Homarr (pnpm)"
 $STD pnpm install
-msg_info "DB migration Homarr"
+msg_info "DB migration Homarr 123"
 $STD pnpm -F db migration:sqlite:run
 msg_info "Building Homarr"
 $STD pnpm build
