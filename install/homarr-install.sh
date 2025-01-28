@@ -53,8 +53,11 @@ rm -rf v${RELEASE}.zip
 mv homarr-${RELEASE} /opt/homarr  
 cd /opt/homarr
 
+msg_info "Installing Homarr (pnpm)"
 $STD pnpm install
+msg_info "Building Homarr"
 $STD pnpm build
+msg_info "DB migration Homarr"
 $STD pnpm run db:migration:sqlite:run
 echo "${RELEASE}" >"/opt/${APPLICATION}_version.txt"
 msg_ok "Installed Homarr"
