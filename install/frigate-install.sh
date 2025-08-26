@@ -27,7 +27,7 @@ NODE_VERSION="22" setup_nodejs
 
 msg_info "Installing go2rtc"
 mkdir -p /usr/local/go2rtc/bin
-cd /usr/local/go2rtc/bin
+cd /usr/local/go2rtc/bin || exit
 curl -fsSL "https://github.com/AlexxIT/go2rtc/releases/latest/download/go2rtc_linux_amd64" -o "go2rtc"
 chmod +x go2rtc
 $STD ln -svf /usr/local/go2rtc/bin/go2rtc /usr/local/bin/go2rtc
@@ -42,13 +42,13 @@ if [[ "$CTTYPE" == "0" ]]; then
 fi
 msg_ok "Set Up Hardware Acceleration"
 
-msg_info "Installing Frigate v0.14.1 (Perseverance)"
-cd ~
+msg_info "Installing Frigate v0.16.0 (Perseverance)"
+cd ~ || exit
 mkdir -p /opt/frigate/models
-curl -fsSL "https://github.com/blakeblackshear/frigate/archive/refs/tags/v0.14.1.tar.gz" -o "frigate.tar.gz"
+curl -fsSL "https://github.com/blakeblackshear/frigate/archive/refs/tags/v0.16.0.tar.gz" -o "frigate.tar.gz"
 tar -xzf frigate.tar.gz -C /opt/frigate --strip-components 1
 rm -rf frigate.tar.gz
-cd /opt/frigate
+cd /opt/frigate || exit
 $STD pip3 wheel --wheel-dir=/wheels -r /opt/frigate/docker/main/requirements-wheels.txt
 cp -a /opt/frigate/docker/main/rootfs/. /
 export TARGETARCH="amd64"
@@ -62,7 +62,7 @@ ldconfig
 $STD pip3 install -r /opt/frigate/docker/main/requirements-dev.txt
 $STD /opt/frigate/.devcontainer/initialize.sh
 $STD make version
-cd /opt/frigate/web
+cd /opt/frigate/web || exit
 $STD npm install
 $STD npm run build
 cp -r /opt/frigate/web/dist/* /opt/frigate/web/
@@ -99,7 +99,7 @@ if grep -q -o -m1 -E 'avx[^ ]*' /proc/cpuinfo; then
   msg_ok "AVX Support Detected"
   msg_info "Installing Openvino Object Detection Model (Resilience)"
   $STD pip install -r /opt/frigate/docker/main/requirements-ov.txt
-  cd /opt/frigate/models
+  cd /opt/frigate/models || exit
   export ENABLE_ANALYTICS=NO
   $STD /usr/local/bin/omz_downloader --name ssdlite_mobilenet_v2 --num_attempts 2
   $STD /usr/local/bin/omz_converter --name ssdlite_mobilenet_v2 --precision FP16 --mo /usr/local/bin/mo
@@ -130,17 +130,17 @@ EOF
 fi
 
 msg_info "Installing Coral Object Detection Model (Patience)"
-cd /opt/frigate
+cd /opt/frigate || exit
 export CCACHE_DIR=/root/.ccache
 export CCACHE_MAXSIZE=2G
 curl -fsSL "https://github.com/libusb/libusb/archive/v1.0.26.zip" -o "v1.0.26.zip"
 $STD unzip v1.0.26.zip
 rm v1.0.26.zip
-cd libusb-1.0.26
+cd libusb-1.0.26 || exit
 $STD ./bootstrap.sh
 $STD ./configure --disable-udev --enable-shared
 $STD make -j $(nproc --all)
-cd /opt/frigate/libusb-1.0.26/libusb
+cd /opt/frigate/libusb-1.0.26/libusb || exit
 mkdir -p /usr/local/lib
 $STD /bin/bash ../libtool --mode=install /usr/bin/install -c libusb-1.0.la '/usr/local/lib'
 mkdir -p /usr/local/include/libusb-1.0
