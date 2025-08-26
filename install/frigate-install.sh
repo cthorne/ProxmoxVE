@@ -19,7 +19,7 @@ $STD apt-get install -y {git,ca-certificates,automake,build-essential,xz-utils,l
 msg_ok "Installed Dependencies"
 
 msg_info "Setup Python3"
-$STD apt-get install -y python3=3.11
+$STD apt-get install -y python3=3.11.2-1
 $STD apt-get install -y {python3-dev,python3-setuptools,python3-distutils,python3-pip}
 $STD pip install --upgrade pip
 msg_ok "Setup Python3"
