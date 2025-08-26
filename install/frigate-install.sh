@@ -19,7 +19,13 @@ $STD apt-get install -y {git,ca-certificates,automake,build-essential,xz-utils,l
 msg_ok "Installed Dependencies"
 
 msg_info "Setup Python3"
-$STD apt-get install -y {python3,python3-dev,python3-setuptools,python3-distutils,python3-pip}
+$STD apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+$STD wget https://www.python.org/ftp/python/3.11.0/Python-3.11.0.tgz
+$STD tar xzf Python-3.11.0.tgz
+$STD cd Python-3.11.0
+$STD ./configure --enable-optimizations
+$STD make install
+$STD apt-get install -y {python3-dev,python3-setuptools,python3-distutils,python3-pip}
 $STD pip install --upgrade pip
 msg_ok "Setup Python3"
 
