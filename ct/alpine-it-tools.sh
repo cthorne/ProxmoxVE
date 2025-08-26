@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/build.func)
-# Copyright (c) 2021-2025 community-scripts ORG
+source <(curl -fsSL https://raw.githubusercontent.com/cthorne/ProxmoxVE/main/misc/build.func)
+# Copyright (c) 2021-2025 cthorne ORG
 # Author: nicedevil007 (NiceDevil)
-# License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
+# License: MIT | https://github.com/cthorne/ProxmoxVE/raw/main/LICENSE
 # Source: https://it-tools.tech/
 
 APP="Alpine-IT-Tools"

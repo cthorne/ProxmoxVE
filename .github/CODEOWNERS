@@ -11,7 +11,7 @@
 
 
 # Set default reviewers
-*                                                                           @community-scripts/Contributor
+*                                                                           @cthorne/Contributor
 
 # All changes in frontend
-/frontend/                                                                  @community-scripts/Frontend-Dev
+/frontend/                                                                  @cthorne/Frontend-Dev

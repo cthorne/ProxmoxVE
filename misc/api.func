@@ -1,6 +1,6 @@
-# Copyright (c) 2021-2025 community-scripts ORG
+# Copyright (c) 2021-2025 cthorne ORG
 # Author: michelroegl-brunner
-# License: MIT | https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/LICENSE
+# License: MIT | https://raw.githubusercontent.com/cthorne/ProxmoxVE/main/LICENSE
 
 post_to_api() {
 
@@ -16,7 +16,7 @@ post_to_api() {
     return
   fi
 
-  local API_URL="http://api.community-scripts.org/upload"
+  local API_URL="http://api.cthorne.org/upload"
   local pve_version="not found"
   pve_version=$(pveversion | awk -F'[/ ]' '{print $2}')
 
@@ -49,10 +49,10 @@ EOF
 
 post_to_api_vm() {
 
-  if [[ ! -f /usr/local/community-scripts/diagnostics ]]; then
+  if [[ ! -f /usr/local/cthorne/diagnostics ]]; then
     return
   fi
-  DIAGNOSTICS=$(grep -i "^DIAGNOSTICS=" /usr/local/community-scripts/diagnostics | awk -F'=' '{print $2}')
+  DIAGNOSTICS=$(grep -i "^DIAGNOSTICS=" /usr/local/cthorne/diagnostics | awk -F'=' '{print $2}')
   if ! command -v curl &>/dev/null; then
     return
   fi
@@ -65,7 +65,7 @@ post_to_api_vm() {
     return
   fi
 
-  local API_URL="http://api.community-scripts.org/upload"
+  local API_URL="http://api.cthorne.org/upload"
   local pve_version="not found"
   pve_version=$(pveversion | awk -F'[/ ]' '{print $2}')
 
@@ -108,7 +108,7 @@ post_update_to_api() {
   if [ "$POST_UPDATE_DONE" = true ]; then
     return 0
   fi
-  local API_URL="http://api.community-scripts.org/upload/updatestatus"
+  local API_URL="http://api.cthorne.org/upload/updatestatus"
   local status="${1:-failed}"
   local error="${2:-No error message}"
 
