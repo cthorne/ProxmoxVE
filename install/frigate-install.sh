@@ -19,9 +19,15 @@ $STD apt-get install -y {git,ca-certificates,automake,build-essential,xz-utils,l
 msg_ok "Installed Dependencies"
 
 msg_info "Setup Python3"
-$STD apt-get install -y {python3,python3-dev,python3-setuptools,python3-distutils,python3-pip}
+$STD apt-get install -y python3=3.11
+$STD apt-get install -y {python3-dev,python3-setuptools,python3-distutils,python3-pip}
 $STD pip install --upgrade pip
 msg_ok "Setup Python3"
+
+msg_info "Installing wheel package tflite runtime"
+$STD pip install wheel
+$STD pip install tflite-runtime
+msg_info "DSetup wheels"
 
 NODE_VERSION="22" setup_nodejs
 
